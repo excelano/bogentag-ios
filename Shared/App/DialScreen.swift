@@ -44,7 +44,7 @@ struct DialScreen: View {
                 .onTapGesture { showsCivil.toggle() }
                 .accessibilityLabel(showsCivil ? "\(Labels.utcClock(now)) UTC, \(Labels.localClock(now))" : reading.timestamp)
             } else {
-                WaitingView(status: location.status)
+                WaitingView()
             }
         }
     }
@@ -52,18 +52,36 @@ struct DialScreen: View {
 
 /// What the dial shows until there is a place to compute it for.
 struct WaitingView: View {
-    let status: SunLocation.Status
+    @Environment(SunLocation.self) private var location
 
     var body: some View {
         VStack(spacing: 12) {
             GlyphView(.noon, radius: 18, lineWidth: 3.5, color: Palette.line)
-            Text(status == .denied
-                 ? "Bogentag needs your location to find the Sun's arc. Allow Location for Bogentag in Settings."
-                 : "Finding the Sun's arc for where you are.")
+            Text(message)
                 .font(.footnote)
                 .foregroundStyle(Palette.secondary)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+            switch location.status {
+            case .undetermined:
+                Button("Use Location") { location.start() }
+            case .waiting, .fixed:
+                ProgressView()
+            case .denied:
+                EmptyView()
+            }
         }
         .padding()
+    }
+
+    private var message: String {
+        switch location.status {
+        case .undetermined:
+            "Bogentag needs your location to find the Sun's arc."
+        case .waiting, .fixed:
+            "Finding where you are."
+        case .denied:
+            "Bogentag needs your location to find the Sun's arc. Allow Location for Bogentag in Settings."
+        }
     }
 }

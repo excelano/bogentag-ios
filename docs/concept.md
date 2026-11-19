@@ -92,10 +92,9 @@ names the minimum iOS version. Reading events needs full access
 (`requestFullAccessToEvents`, `NSCalendarsFullAccessUsageDescription`); write-only
 access cannot read the day.
 
-Location is the other input. Bogenplan asks for approximate location only
-(`NSLocationDefaultAccuracyReduced`), reads it while the app is open, and keeps the
-coordinates on the device, since the error of an approximate location moves solar
-noon and sunrise by tens of seconds at most, well under a span. There is one place,
+Location is the other input. The app asks for location while it is open and keeps
+the coordinates on the device. It asks with the system's default accuracy; the watch
+app shares the iPhone app's location authorization. There is one place,
 the latest fix, and every day, future ones included, is drawn at it. Without the
 permission the app explains what it needs instead of drawing a day, and withdrawing
 the permission discards the stored coordinates.

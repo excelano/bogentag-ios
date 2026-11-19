@@ -16,7 +16,7 @@ Bogenplan makes no network request, opens no socket and links no networking or a
 
 With permission, it reads the device's calendars through EventKit while it is on screen, and keeps no copy of an event. It creates an event only when you set a moment, and changes or deletes one only when you save or delete it in its details or in the system's event editor.
 
-It reads approximate location only with permission and only while the app is on screen. Withdrawing the permission discards the stored coordinates.
+It reads location only with permission and only while the app is on screen. Withdrawing the permission discards the stored coordinates.
 
 ## What Bogenplan stores
 

@@ -96,7 +96,6 @@
 		B20000000000000000000006 /* BogentagWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BogentagWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000008 /* BogentagPhoneWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BogentagPhoneWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000007 /* Widgets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Widgets-Info.plist"; sourceTree = "<group>"; };
-		B20000000000000000000009 /* Bogentag-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bogentag-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -250,7 +249,6 @@
 				B20000000000000000000003 /* Bogentag.xcconfig */,
 				B20000000000000000000004 /* Version.xcconfig */,
 				B20000000000000000000007 /* Widgets-Info.plist */,
-				B20000000000000000000009 /* Bogentag-Info.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -654,7 +652,6 @@
 				CODE_SIGN_ENTITLEMENTS = Config/AppGroup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/Bogentag-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENTAG_DISPLAY_NAME)";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogentag shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
@@ -685,7 +682,6 @@
 				CODE_SIGN_ENTITLEMENTS = Config/AppGroup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/Bogentag-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENTAG_DISPLAY_NAME)";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogentag shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";

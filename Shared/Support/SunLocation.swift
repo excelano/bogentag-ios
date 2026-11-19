@@ -20,12 +20,11 @@ final class SunLocation: NSObject, CLLocationManagerDelegate {
     }
 
     private(set) var place: Place?
-    private(set) var status: Status = .undetermined
+    private(set) var status: Status = .waiting
 
     static let moveThreshold: CLLocationDistance = 10_000
 
     private let manager = CLLocationManager()
-    private var wanted = false
 
     override init() {
         super.init()
@@ -35,37 +34,30 @@ final class SunLocation: NSObject, CLLocationManagerDelegate {
             return
         }
         place = AppGroup.loadPlace()
-        if place != nil { status = .fixed }
+        if place != nil {
+            status = .fixed
+        } else if manager.authorizationStatus == .notDetermined {
+            status = .undetermined
+        }
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
-        follow(manager.authorizationStatus)
     }
 
     func start() {
         guard !Demo.active else { return }
-        wanted = true
-        if manager.authorizationStatus == .notDetermined {
-            manager.requestWhenInUseAuthorization()
-        } else {
-            follow(manager.authorizationStatus)
-        }
-    }
-
-    func stop() {
-        wanted = false
-        manager.stopUpdatingLocation()
-    }
-
-    private func follow(_ authorization: CLAuthorizationStatus) {
-        switch authorization {
+        switch manager.authorizationStatus {
         case .notDetermined:
-            if place == nil { status = .undetermined }
+            manager.requestWhenInUseAuthorization()
         case .denied, .restricted:
             forget()
         default:
             if place == nil { status = .waiting }
-            if wanted { manager.startUpdatingLocation() }
+            manager.startUpdatingLocation()
         }
+    }
+
+    func stop() {
+        manager.stopUpdatingLocation()
     }
 
     private func forget() {
@@ -78,8 +70,8 @@ final class SunLocation: NSObject, CLLocationManagerDelegate {
     }
 
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let authorization = manager.authorizationStatus
-        Task { @MainActor in self.follow(authorization) }
+        guard manager.authorizationStatus != .notDetermined else { return }
+        Task { @MainActor in self.start() }
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -48,7 +48,8 @@ struct ContentView: View {
             AccessGate(
                 title: "Your calendars",
                 message: "Bogentag shows the calendars on this iPhone laid out on the Sun's arc, adds the moments you set to them, and saves the changes you make to an event. Your events stay here and are sent nowhere.",
-                actionTitle: "Allow Calendar Access"
+                actionTitle: "Allow Calendar Access",
+                busy: calendars.requesting
             ) { calendars.requestAccess() }
         } else {
             AccessGate(
@@ -65,13 +66,13 @@ struct ContentView: View {
         case .undetermined:
             AccessGate(
                 title: "Where you are",
-                message: "Solar noon, sunrise and sunset depend on where you are. Bogentag uses your approximate location, reads it only while open, and keeps it on this iPhone.",
-                actionTitle: "Use Approximate Location"
+                message: "Solar noon, sunrise and sunset depend on where you are. Bogentag uses your location, reads it only while open, and keeps it on this iPhone.",
+                actionTitle: "Use Location"
             ) { location.start() }
         case .denied:
             AccessGate(
                 title: "Location access is off",
-                message: "Bogentag needs your approximate location to find the Sun's arc where you are. Turn it on for Bogentag in Settings, under Location.",
+                message: "Bogentag needs your location to find the Sun's arc where you are. Turn it on for Bogentag in Settings, under Location.",
                 actionTitle: "Open Settings",
                 action: openSettings
             )
@@ -91,6 +92,7 @@ private struct AccessGate: View {
     let title: String
     let message: String
     let actionTitle: String
+    var busy = false
     let action: () -> Void
 
     var body: some View {
@@ -101,10 +103,15 @@ private struct AccessGate: View {
             Text(message)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Palette.label)
-            Button(actionTitle, action: action)
-                .buttonStyle(.borderedProminent)
-                .tint(Palette.sun)
-                .foregroundStyle(Palette.night)
+            if busy {
+                ProgressView()
+                    .tint(Palette.sun)
+            } else {
+                Button(actionTitle, action: action)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Palette.sun)
+                    .foregroundStyle(Palette.night)
+            }
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -12,8 +12,10 @@ final class CalendarStore {
     private(set) var calendars: [EKCalendar] = []
     private(set) var hiddenIDs: Set<String>
     private(set) var storeChanges = 0
+    private(set) var requesting = false
 
     @ObservationIgnored private let store = EKEventStore()
+    @ObservationIgnored private var granted = false
 
     init() {
         hiddenIDs = Set(UserDefaults.standard.stringArray(forKey: Settings.hiddenCalendarsKey) ?? [])
@@ -21,8 +23,13 @@ final class CalendarStore {
     }
 
     func requestAccess() {
-        store.requestFullAccessToEvents { @Sendable _, _ in
-            Task { @MainActor in self.reload() }
+        requesting = true
+        store.requestFullAccessToEvents { @Sendable granted, _ in
+            Task { @MainActor in
+                self.requesting = false
+                self.granted = granted
+                self.reload()
+            }
         }
     }
 
@@ -38,7 +45,7 @@ final class CalendarStore {
             calendars = CalendarDemo.calendars
             return
         }
-        access = EKEventStore.authorizationStatus(for: .event)
+        access = granted ? .fullAccess : EKEventStore.authorizationStatus(for: .event)
         guard access == .fullAccess else {
             calendars = []
             return

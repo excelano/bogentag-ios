@@ -32,7 +32,7 @@ struct TimerScreen: View {
                     .padding(.horizontal)
                 }
             } else {
-                WaitingView(status: location.status)
+                WaitingView()
             }
         }
     }

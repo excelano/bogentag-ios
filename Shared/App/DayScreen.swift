@@ -18,7 +18,7 @@ struct DayScreen: View {
                 let reading = Reading(at: now, latitude: place.latitude, longitude: place.longitude)
                 DayView(reading: reading)
             } else {
-                WaitingView(status: location.status)
+                WaitingView()
             }
         }
     }

@@ -25,7 +25,7 @@ struct StopwatchScreen: View {
                     .padding(.horizontal)
                 }
             } else {
-                WaitingView(status: location.status)
+                WaitingView()
             }
         }
     }
