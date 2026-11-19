@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C80000000000000000000001"
-               BuildableName = "Bogenplan.app"
-               BlueprintName = "Bogenplan"
-               ReferencedContainer = "container:Bogenplan.xcodeproj">
+               BuildableName = "Bogentag.app"
+               BlueprintName = "Bogentag"
+               ReferencedContainer = "container:Bogentag.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C80000000000000000000001"
-            BuildableName = "Bogenplan.app"
-            BlueprintName = "Bogenplan"
-            ReferencedContainer = "container:Bogenplan.xcodeproj">
+            BuildableName = "Bogentag.app"
+            BlueprintName = "Bogentag"
+            ReferencedContainer = "container:Bogentag.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>

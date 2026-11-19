@@ -4,7 +4,7 @@
 import SwiftUI
 
 @main
-struct BogenplanApp: App {
+struct BogentagApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

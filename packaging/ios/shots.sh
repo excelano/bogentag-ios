@@ -2,10 +2,10 @@
 # The App Store screenshots, as recipes. shots-appstore builds the app for the
 # simulator, boots each simulator ship.toml names, installs the app, and calls
 # this with the simulator, the language and where the frames go. The scenes
-# are the Debug launch arguments Bogenplan/Demo.swift reads: a made-up week in
+# are the Debug launch arguments Bogentag/Demo.swift reads: a made-up week in
 # Houston, opened on a November Wednesday.
 #
-#     ./packaging/ios/shots.sh --app <Bogenplan.app> --device <udid> --lang en-us --outdir <dir>
+#     ./packaging/ios/shots.sh --app <Bogentag.app> --device <udid> --lang en-us --outdir <dir>
 #
 # Author: David M. Anderson
 # Built with AI assistance (Claude, Anthropic)

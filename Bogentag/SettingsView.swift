@@ -82,7 +82,7 @@ struct SettingsView: View {
         } header: {
             Text("Place")
         } footer: {
-            Text("Approximate, read while Bogenplan is open, and kept on this iPhone.")
+            Text("Approximate, read while Bogentag is open, and kept on this iPhone.")
         }
     }
 

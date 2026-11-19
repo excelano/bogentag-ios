@@ -36,13 +36,13 @@ struct ContentView: View {
         if calendars.access == .notDetermined {
             AccessGate(
                 title: "Your calendars",
-                message: "Bogenplan shows the calendars on this iPhone laid out on the Sun's arc, adds the moments you set to them, and saves the changes you make to an event. Your events stay here and are sent nowhere.",
+                message: "Bogentag shows the calendars on this iPhone laid out on the Sun's arc, adds the moments you set to them, and saves the changes you make to an event. Your events stay here and are sent nowhere.",
                 actionTitle: "Allow Calendar Access"
             ) { calendars.requestAccess() }
         } else {
             AccessGate(
                 title: "Calendar access is off",
-                message: "Bogenplan needs full access to read your events. Turn it on for Bogenplan in Settings, under Calendars.",
+                message: "Bogentag needs full access to read your events. Turn it on for Bogentag in Settings, under Calendars.",
                 actionTitle: "Open Settings",
                 action: openSettings
             )
@@ -54,13 +54,13 @@ struct ContentView: View {
         case .notDetermined:
             AccessGate(
                 title: "Where you are",
-                message: "Solar noon, sunrise and sunset depend on where you are. Bogenplan uses your approximate location, reads it only while open, and keeps it on this iPhone.",
+                message: "Solar noon, sunrise and sunset depend on where you are. Bogentag uses your approximate location, reads it only while open, and keeps it on this iPhone.",
                 actionTitle: "Use Approximate Location"
             ) { solarPlace.request() }
         case .denied, .restricted:
             AccessGate(
                 title: "Location access is off",
-                message: "Bogenplan needs your approximate location to find the Sun's arc where you are. Turn it on for Bogenplan in Settings, under Location.",
+                message: "Bogentag needs your approximate location to find the Sun's arc where you are. Turn it on for Bogentag in Settings, under Location.",
                 actionTitle: "Open Settings",
                 action: openSettings
             )

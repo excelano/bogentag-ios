@@ -12,16 +12,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C20000000000000000000001 /* Bogenplan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bogenplan.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C20000000000000000000002 /* Bogenplan.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Bogenplan.xcconfig; sourceTree = "<group>"; };
+		C20000000000000000000001 /* Bogentag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bogentag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C20000000000000000000002 /* Bogentag.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Bogentag.xcconfig; sourceTree = "<group>"; };
 		C20000000000000000000003 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
-		C20000000000000000000004 /* Bogenplan-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bogenplan-Info.plist"; sourceTree = "<group>"; };
+		C20000000000000000000004 /* Bogentag-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bogentag-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C50000000000000000000001 /* Bogenplan */ = {
+		C50000000000000000000001 /* Bogentag */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Bogenplan;
+			path = Bogentag;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -42,7 +42,7 @@
 		C70000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				C50000000000000000000001 /* Bogenplan */,
+				C50000000000000000000001 /* Bogentag */,
 				C70000000000000000000003 /* Config */,
 				C70000000000000000000002 /* Products */,
 			);
@@ -51,7 +51,7 @@
 		C70000000000000000000002 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C20000000000000000000001 /* Bogenplan.app */,
+				C20000000000000000000001 /* Bogentag.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,9 +59,9 @@
 		C70000000000000000000003 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				C20000000000000000000002 /* Bogenplan.xcconfig */,
+				C20000000000000000000002 /* Bogentag.xcconfig */,
 				C20000000000000000000003 /* Version.xcconfig */,
-				C20000000000000000000004 /* Bogenplan-Info.plist */,
+				C20000000000000000000004 /* Bogentag-Info.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -69,9 +69,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C80000000000000000000001 /* Bogenplan */ = {
+		C80000000000000000000001 /* Bogentag */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE0000000000000000000002 /* Build configuration list for PBXNativeTarget "Bogenplan" */;
+			buildConfigurationList = CE0000000000000000000002 /* Build configuration list for PBXNativeTarget "Bogentag" */;
 			buildPhases = (
 				CA0000000000000000000001 /* Sources */,
 				C60000000000000000000001 /* Frameworks */,
@@ -82,15 +82,15 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C50000000000000000000001 /* Bogenplan */,
+				C50000000000000000000001 /* Bogentag */,
 			);
-			name = Bogenplan;
+			name = Bogentag;
 			packageProductDependencies = (
 				CC0000000000000000000001 /* Bogenzeit */,
 				CC0000000000000000000002 /* BogenzeitUI */,
 			);
-			productName = Bogenplan;
-			productReference = C20000000000000000000001 /* Bogenplan.app */;
+			productName = Bogentag;
+			productReference = C20000000000000000000001 /* Bogentag.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CE0000000000000000000001 /* Build configuration list for PBXProject "Bogenplan" */;
+			buildConfigurationList = CE0000000000000000000001 /* Build configuration list for PBXProject "Bogentag" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C80000000000000000000001 /* Bogenplan */,
+				C80000000000000000000001 /* Bogentag */,
 			);
 		};
 /* End PBXProject section */
@@ -153,7 +153,7 @@
 /* Begin XCBuildConfiguration section */
 		CF0000000000000000000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C20000000000000000000002 /* Bogenplan.xcconfig */;
+			baseConfigurationReference = C20000000000000000000002 /* Bogentag.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -174,7 +174,7 @@
 		};
 		CF0000000000000000000002 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C20000000000000000000002 /* Bogenplan.xcconfig */;
+			baseConfigurationReference = C20000000000000000000002 /* Bogentag.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -197,11 +197,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/Bogenplan-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENPLAN_DISPLAY_NAME)";
+				INFOPLIST_FILE = "Config/Bogentag-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENTAG_DISPLAY_NAME)";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogenplan shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bogenplan finds solar noon, sunrise and sunset where you are.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogentag shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bogentag finds solar noon, sunrise and sunset where you are.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -211,7 +211,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BOGENPLAN_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BOGENTAG_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -223,11 +223,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/Bogenplan-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENPLAN_DISPLAY_NAME)";
+				INFOPLIST_FILE = "Config/Bogentag-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BOGENTAG_DISPLAY_NAME)";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogenplan shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bogenplan finds solar noon, sunrise and sunset where you are.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Bogentag shows your events on the Sun's arc, adds the moments you set and saves the changes you make to an event. Your events stay on this iPhone and are sent nowhere.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bogentag finds solar noon, sunrise and sunset where you are.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -237,7 +237,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BOGENPLAN_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BOGENTAG_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -245,7 +245,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE0000000000000000000001 /* Build configuration list for PBXProject "Bogenplan" */ = {
+		CE0000000000000000000001 /* Build configuration list for PBXProject "Bogentag" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF0000000000000000000001 /* Debug */,
@@ -254,7 +254,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE0000000000000000000002 /* Build configuration list for PBXNativeTarget "Bogenplan" */ = {
+		CE0000000000000000000002 /* Build configuration list for PBXNativeTarget "Bogentag" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF0000000000000000000003 /* Debug */,
