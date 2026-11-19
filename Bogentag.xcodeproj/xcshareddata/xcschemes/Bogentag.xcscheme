@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C80000000000000000000001"
+               BlueprintIdentifier = "B80000000000000000000003"
                BuildableName = "Bogentag.app"
                BlueprintName = "Bogentag"
                ReferencedContainer = "container:Bogentag.xcodeproj">
@@ -35,7 +35,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C80000000000000000000001"
+            BlueprintIdentifier = "B80000000000000000000003"
             BuildableName = "Bogentag.app"
             BlueprintName = "Bogentag"
             ReferencedContainer = "container:Bogentag.xcodeproj">

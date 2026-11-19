@@ -2,8 +2,10 @@
 # The App Store screenshots, as recipes. shots-appstore builds the app for the
 # simulator, boots each simulator ship.toml names, installs the app, and calls
 # this with the simulator, the language and where the frames go. The scenes
-# are the Debug launch arguments Bogentag/Demo.swift reads: a made-up week in
-# Houston, opened on a November Wednesday.
+# are the Debug launch arguments the Demo.swift files read: on the iPhone and
+# iPad, Bogentag/Demo.swift's made-up week in Houston, opened on a November
+# Wednesday; on the watch, embedded in the iPhone app, Shared/Support/Demo.swift's
+# Houston on the spec's worked day, each dial and the civil view over each.
 #
 #     ./packaging/ios/shots.sh --app <Bogentag.app> --device <udid> --lang en-us --outdir <dir>
 #
@@ -25,7 +27,10 @@ case "$lang" in
     en|en-us|en-US) languages='(en)'; locale=en_US ;;
     *) echo "shots.sh: no set is written for $lang" >&2; exit 2 ;;
 esac
-bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")
+case "$(xcrun simctl list devices | grep -F "($device)" | head -1)" in
+    *Watch*) bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app"/Watch/*.app/Info.plist); watch=yes ;;
+    *) bundle=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist"); watch= ;;
+esac
 mkdir -p "$outdir"
 settle=6
 shot() {
@@ -37,8 +42,16 @@ shot() {
     xcrun simctl io "$device" screenshot --type=png "$outdir/$name.png" >/dev/null
     echo "$name"
 }
-shot 01-today --demo
-shot 02-whole-day --demo --zoom 1.5
-shot 03-event --demo --event "Design review"
-shot 04-june --demo --date 2026-06-17
+if [ -n "$watch" ]; then
+    shot 01-spans --demo
+    shot 02-kiloseconds --demo --page kiloseconds
+    shot 03-civil --demo --civil
+    shot 04-kiloseconds-civil --demo --page kiloseconds --civil
+    shot 05-day --demo --page day
+else
+    shot 01-today --demo
+    shot 02-whole-day --demo --zoom 1.5
+    shot 03-event --demo --event "Design review"
+    shot 04-june --demo --date 2026-06-17
+fi
 xcrun simctl terminate "$device" "$bundle" >/dev/null 2>&1 || true

@@ -7,6 +7,9 @@
 DEVELOPMENT_TEAM = 9K6W5PMFYP
 // The App Store record's bundle id, the iPhone app's, which the others extend.
 BOGENTAG_BUNDLE_ID = com.excelano.bogentag
+BOGENTAG_WATCH_BUNDLE_ID = $(BOGENTAG_BUNDLE_ID).watchkitapp
 BOGENTAG_DISPLAY_NAME = Bogentag
+// Shared by the watch app and its widgets; Shared/Support/AppGroup.swift names it too.
+BOGENTAG_APP_GROUP = group.$(BOGENTAG_BUNDLE_ID)
 
 #include "Version.xcconfig"
