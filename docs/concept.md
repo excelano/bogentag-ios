@@ -1,35 +1,30 @@
-# Bogenplan — concept
+# Bogentag calendar — concept
 
-Bogenplan is a calendar for iPhone and iPad that shows the calendars the person already keeps,
-read through EventKit, in Bogenzeit: positions in spans or kiloseconds from solar noon
-(☉) and solar midnight (○), with sunrise (△) and sunset (▽) between. Apple Calendar
-is a good calendar and a useful point of comparison, but Bogenplan is not a copy of
-it. Once the axis is the Sun instead of the clock, how a day is presented is open,
-and that is where the app can be inventive.
+On iPhone and iPad, Bogentag opens on a calendar that shows the calendars the person
+already keeps, read through EventKit, in Bogenzeit: positions in spans or kiloseconds
+from solar noon (☉) and solar midnight (○), with sunrise (△) and sunset (▽) between.
+Apple Calendar is a good calendar and a useful point of comparison, but Bogentag's
+calendar is not a copy of it. Once the axis is the Sun instead of the clock, how a day
+is presented is open, and that is where the app can be inventive.
 
 The standard is defined in excelano/bogenzeit (`docs/bogenzeit-spec.md`, normative).
 Nothing here redefines it; where this document and the spec disagree, the spec wins.
+The dial, its timer and stopwatch, the tour, the watch app and the complications are
+described in `bogentag-spec.md`; this document covers the calendar.
 
 ## What it does
 
-Bogenplan shows the events in the calendars on the device, lets the person move
-between days, jump to today, choose which calendars are shown, and open an event to
-see its details with its civil times. The one event it makes itself is a moment. In an
-event's details, tapping its start or end opens a sheet that sets either by typing a
-reading or a step at a time in Bogenzeit, as a moment is set, with the Bogenzeit day
-chosen beside it to move the event to the same reading on another day, or in civil
-time; moving the start
-keeps the event's length, and the end cannot go before the start. Edit Details opens the
-system's event editor, where everything else about the event is changed or the event
-is deleted. For a repeating event both ask whether the change is for this occurrence
-or for the ones after it. Bogenplan does not answer invitations.
-
-The Linux desktop app also opens iCalendar files, so it can be the desktop's
-calendar application and take the invitations a mail client hands it. The file's
-events are shown in Bogenzeit and added to a calendar the person chooses, each as
-the person's own copy without its organizer and attendees, so the server sends
-nothing and the invitation stays unanswered. An event already in a calendar with
-the same UID is replaced, and a cancellation removes it.
+The calendar shows the events in the calendars on the device, lets the person move
+between days or pick one from the date picker, which also returns to today, choose which
+calendars are shown, and open an event to see its details with its civil times. The one
+event it makes itself is a moment. In an event's details, tapping its start or end opens
+a sheet that sets either by typing a reading or a step at a time in Bogenzeit, as a
+moment is set, with the Bogenzeit day chosen beside it to move the event to the same
+reading on another day, or in civil time; moving the start keeps the event's length, and
+the end cannot go before the start. Edit Details opens the system's event editor, where
+everything else about the event is changed or the event is deleted. For a repeating
+event both ask whether the change is for this occurrence or for the ones after it.
+Bogentag does not answer invitations.
 
 ## Moments
 
@@ -45,7 +40,7 @@ number, before or after, and ○, △, ☉ or ▽) or a step at a time at the sc
 precision in Settings, or in civil time. Adding it saves a zero-length
 event to the default calendar for new events with an alert at its start. The alert
 is the calendar's own, so it reaches every device that has the calendar, the watch
-included, and needs nothing from Bogenplan afterwards. The instant is computed once,
+included, and needs nothing from Bogentag afterwards. The instant is computed once,
 for where the person is when setting it, and rounded up to the whole second so that
 a calendar that drops fractions cannot show it a step early. Its default title is the
 reading in words, since a calendar shows titles in a font and the glyphs are drawn
@@ -92,12 +87,13 @@ names the minimum iOS version. Reading events needs full access
 (`requestFullAccessToEvents`, `NSCalendarsFullAccessUsageDescription`); write-only
 access cannot read the day.
 
-Location is the other input. The app asks for location while it is open and keeps
-the coordinates on the device. It asks with the system's default accuracy; the watch
-app shares the iPhone app's location authorization. There is one place,
-the latest fix, and every day, future ones included, is drawn at it. Without the
-permission the app explains what it needs instead of drawing a day, and withdrawing
-the permission discards the stored coordinates.
+Location is the other input. The app asks for location while it is open, with the
+system's default accuracy, and keeps the coordinates on the device; the watch app
+asks for its own. There is one place, the one the calendar, the dial and the widgets
+share, and every day, future ones included, is drawn at it. A new fix replaces it only
+when it is more than ten kilometres away (spec §5.5). Without the permission the app
+explains what it needs instead of drawing a day, and withdrawing the permission
+discards the stored coordinates.
 
 The privacy posture follows the other Excelano apps: no backend, no analytics, no
 third-party SDKs, no network at all. Calendar data stays in EventKit and the location
@@ -117,8 +113,9 @@ two anchors at matching sizes. Anything the calendar needs that is a property of
 standard (a new computation, a new form) goes into the spec and the Python reference
 first, then the package, so every app agrees.
 
-Bogentag, whose face spec is in excelano/bogentag, is the reference for how
-Bogenzeit looks on Apple platforms.
+The dial and its face spec, `bogentag-spec.md`, are the reference for how Bogenzeit
+looks on Apple platforms, and the calendar draws its glyphs, colors and readouts the
+same way.
 
 Releases go through the apps in excelano/shipping, from a gitignored `ship.toml`;
 development builds go through `xcremote` from the Debian box to the Mac. The bundle

@@ -2,9 +2,9 @@
 # against the release being cut, so notes left from last time stop the release
 # rather than reaching the listing.
 
-version = "0.5.3"
+version = "0.6.0"
 
 [locales."en-us"]
 whats-new = """
-The line marking now carries the current reading, with the civil time beside it when civil time is shown.
+Bogentag now opens on your calendar laid out on the Sun's arc. The reading in the toolbar opens the dial, with its timer, stopwatch and tour, and the Apple Watch app, widgets and complications come with it.
 """
