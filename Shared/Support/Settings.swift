@@ -12,6 +12,9 @@ import Foundation
 enum Settings {
     static let dialVariantKey = "dialVariant"
     static let precisionKey = "precision"
+    static let showsCivilTimeKey = "showsCivilTime"
+    static let pointsPerSpanKey = "pointsPerSpan"
+    static let hiddenCalendarsKey = "hiddenCalendars"
 
     static var dialVariant: Scale {
         AppGroup.defaults.string(forKey: dialVariantKey).flatMap(Scale.init) ?? .spans

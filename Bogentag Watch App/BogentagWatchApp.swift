@@ -1,4 +1,4 @@
-// BogentagApp.swift
+// BogentagWatchApp.swift
 // Author: David M. Anderson
 // Built with AI assistance (Claude, Anthropic)
 
@@ -6,7 +6,7 @@ import SwiftUI
 import UserNotifications
 
 @main
-struct BogentagApp: App {
+struct BogentagWatchApp: App {
     @State private var location = SunLocation()
     @State private var timing = Timing()
 

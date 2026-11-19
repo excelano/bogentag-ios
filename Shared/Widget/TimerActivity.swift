@@ -14,7 +14,7 @@ struct TimerAttributes: ActivityAttributes, Equatable {
 
     let unit: TimerUnit
     let amount: Double
-    let place: AppGroup.Place
+    let place: Place
 
     func status(_ state: ContentState, done: Bool) -> String {
         done ? "DONE" : state.run == nil ? "PAUSED" : "TIMER"

@@ -10,19 +10,26 @@ struct SettingsView: View {
     let place: Place
 
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(SettingKey.scale) private var scale = Scale.standard.rawValue
-    @AppStorage(SettingKey.precision) private var precision = Precision.standard.rawValue
-    @AppStorage(SettingKey.showsCivilTime) private var showsCivilTime = true
+    @Environment(SunLocation.self) private var location
+    @AppStorage(Settings.showsCivilTimeKey) private var showsCivilTime = true
+    @State private var showsTour = false
 
     var body: some View {
         NavigationStack {
             Form {
                 bogenzeitSection
+                Section {
+                    Button("About Bogenzeit") { showsTour = true }
+                    WatchFaceButton()
+                }
                 ForEach(sources, id: \.title) { source in
                     calendarSection(source.title, source.calendars)
                 }
                 placeSection
                 versionSection
+            }
+            .sheet(isPresented: $showsTour) {
+                TourView().environment(location)
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
@@ -37,12 +44,8 @@ struct SettingsView: View {
 
     private var bogenzeitSection: some View {
         Section {
-            Picker("Scale", selection: $scale) {
-                ForEach(Scale.allCases) { Text($0.title).tag($0.rawValue) }
-            }
-            Picker("Precision", selection: $precision) {
-                ForEach(Precision.allCases) { Text($0.title).tag($0.rawValue) }
-            }
+            DialVariantChoice(title: "Scale")
+            PrecisionChoice()
             Toggle("Show civil time", isOn: $showsCivilTime)
         } header: {
             Text("Bogenzeit")

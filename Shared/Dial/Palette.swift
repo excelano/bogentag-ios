@@ -9,6 +9,7 @@ enum Palette {
     static let bezel = Color(hex: 0x0F1726)
     static let night = Color(hex: 0x0A1222)
     static let day = Color(hex: 0x4C86C4)
+    static let columnDay = Color(hex: 0x33598A)
     static let civilTwilight = Color(hex: 0x2A4470)
     static let nauticalTwilight = Color(hex: 0x1B2D50)
     static let astronomicalTwilight = Color(hex: 0x121F38)

@@ -31,7 +31,7 @@ struct StopwatchScreen: View {
     }
 
     @ViewBuilder
-    private func content(now: Date, place: AppGroup.Place) -> some View {
+    private func content(now: Date, place: Place) -> some View {
         let stopwatch = timing.stopwatch
         let elapsed = stopwatch?.elapsed(at: now) ?? .zero
         let running = stopwatch?.since != nil

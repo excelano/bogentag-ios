@@ -6,7 +6,7 @@ import XCTest
 @testable import Bogentag_Watch_App
 
 final class TimingTests: XCTestCase {
-    private let houston = AppGroup.Place(latitude: 29.76, longitude: -95.37)
+    private let houston = Place(latitude: 29.76, longitude: -95.37)
     private var day: SolarDay {
         SolarDay(CalendarDay(year: 2026, month: 11, day: 1)!, latitude: houston.latitude, longitude: houston.longitude)
     }

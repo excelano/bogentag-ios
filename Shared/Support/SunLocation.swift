@@ -13,17 +13,19 @@ import WidgetKit
 @MainActor @Observable
 final class SunLocation: NSObject, CLLocationManagerDelegate {
     enum Status: Equatable {
+        case undetermined
         case waiting
         case denied
         case fixed
     }
 
-    private(set) var place: AppGroup.Place?
-    private(set) var status: Status = .waiting
+    private(set) var place: Place?
+    private(set) var status: Status = .undetermined
 
     static let moveThreshold: CLLocationDistance = 10_000
 
     private let manager = CLLocationManager()
+    private var wanted = false
 
     override init() {
         super.init()
@@ -36,26 +38,48 @@ final class SunLocation: NSObject, CLLocationManagerDelegate {
         if place != nil { status = .fixed }
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        follow(manager.authorizationStatus)
     }
 
     func start() {
         guard !Demo.active else { return }
-        switch manager.authorizationStatus {
-        case .notDetermined:
+        wanted = true
+        if manager.authorizationStatus == .notDetermined {
             manager.requestWhenInUseAuthorization()
-        case .denied, .restricted:
-            if place == nil { status = .denied }
-        default:
-            manager.startUpdatingLocation()
+        } else {
+            follow(manager.authorizationStatus)
         }
     }
 
     func stop() {
+        wanted = false
         manager.stopUpdatingLocation()
     }
 
+    private func follow(_ authorization: CLAuthorizationStatus) {
+        switch authorization {
+        case .notDetermined:
+            if place == nil { status = .undetermined }
+        case .denied, .restricted:
+            forget()
+        default:
+            if place == nil { status = .waiting }
+            if wanted { manager.startUpdatingLocation() }
+        }
+    }
+
+    private func forget() {
+        manager.stopUpdatingLocation()
+        status = .denied
+        guard place != nil else { return }
+        place = nil
+        AppGroup.forgetPlace()
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        Task { @MainActor in self.start() }
+        let authorization = manager.authorizationStatus
+        Task { @MainActor in self.follow(authorization) }
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -73,7 +97,7 @@ final class SunLocation: NSObject, CLLocationManagerDelegate {
                 .distance(from: CLLocation(latitude: latitude, longitude: longitude))
             if moved < Self.moveThreshold { return }
         }
-        let adopted = AppGroup.Place(latitude: latitude, longitude: longitude)
+        let adopted = Place(latitude: latitude, longitude: longitude)
         place = adopted
         status = .fixed
         AppGroup.save(adopted)

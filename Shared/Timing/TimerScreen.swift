@@ -38,7 +38,7 @@ struct TimerScreen: View {
     }
 
     @ViewBuilder
-    private func running(_ timer: SpanTimer, now: Date, place: AppGroup.Place) -> some View {
+    private func running(_ timer: SpanTimer, now: Date, place: Place) -> some View {
         let done = timer.isDone(at: now)
         let left = timer.remaining(at: now)
         let shown = AmountText.number(left, timer.unit, precision, .up)
@@ -80,7 +80,7 @@ struct TimerScreen: View {
     }
 
     @ViewBuilder
-    private func setter(now: Date, place: AppGroup.Place) -> some View {
+    private func setter(now: Date, place: Place) -> some View {
         let polar = Reading(at: now, latitude: place.latitude, longitude: place.longitude).polar != nil
         let unit = polar ? .kiloseconds : TimerUnit(Scale(rawValue: variant) ?? .spans)
         let amount = self.amount(unit)
@@ -102,7 +102,7 @@ struct TimerScreen: View {
         #endif
     }
 
-    private func start(_ amount: Double, _ unit: TimerUnit, end: Date?, now: Date, place: AppGroup.Place) -> some View {
+    private func start(_ amount: Double, _ unit: TimerUnit, end: Date?, now: Date, place: Place) -> some View {
         Button("Start") { timing.startTimer(amount, unit, at: now, place: place) }
             .buttonStyle(ChoiceButtonStyle(selected: true))
             .disabled(end == nil)

@@ -39,7 +39,7 @@ enum Demo {
     static let tourPage: Int? = nil
     #endif
 
-    static let place = AppGroup.Place(latitude: 29.76, longitude: -95.37)
+    static let place = Place(latitude: 29.76, longitude: -95.37)
     static let instant = Date(rfc3339: "2026-11-01T17:08:00Z")!
 
     static func now(_ date: Date) -> Date {

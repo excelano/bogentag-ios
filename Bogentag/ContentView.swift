@@ -6,29 +6,52 @@ import SwiftUI
 import UIKit
 
 struct ContentView: View {
+    enum Tab {
+        case calendar
+        case dial
+    }
+
+    @Environment(SunLocation.self) private var location
     @State private var calendars = CalendarStore()
-    @State private var solarPlace = SolarPlace()
+    @State private var tab: Tab = Demo.page == nil ? .calendar : .dial
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openURL) private var openURL
 
     var body: some View {
         Group {
-            if calendars.access != .fullAccess {
-                calendarGate
-            } else if let place = Demo.active ? Demo.place : solarPlace.place {
-                DayPager(place: place, calendars: calendars)
-                    .environment(calendars)
+            if let place = location.place {
+                TabView(selection: $tab) {
+                    calendar(at: place)
+                        .tabItem { Label("Calendar", systemImage: "calendar") }
+                        .tag(Tab.calendar)
+                    DialTab()
+                        .tabItem { Label("Dial", systemImage: "sun.max") }
+                        .tag(Tab.dial)
+                }
+                .tint(Palette.sun)
+                .environment(calendars)
             } else {
                 locationGate
             }
         }
-        .onChange(of: scenePhase) { _, phase in
-            guard phase == .active else { return }
-            calendars.refresh()
-            solarPlace.refresh()
+        .onChange(of: scenePhase, initial: true) { _, phase in
+            if phase == .active {
+                calendars.refresh()
+                if location.status != .undetermined { location.start() }
+            } else {
+                location.stop()
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged).receive(on: RunLoop.main)) { _ in
             calendars.reload()
+        }
+    }
+
+    @ViewBuilder private func calendar(at place: Place) -> some View {
+        if calendars.access == .fullAccess {
+            DayPager(place: place, calendars: calendars)
+        } else {
+            calendarGate
         }
     }
 
@@ -50,21 +73,21 @@ struct ContentView: View {
     }
 
     @ViewBuilder private var locationGate: some View {
-        switch solarPlace.authorization {
-        case .notDetermined:
+        switch location.status {
+        case .undetermined:
             AccessGate(
                 title: "Where you are",
                 message: "Solar noon, sunrise and sunset depend on where you are. Bogentag uses your approximate location, reads it only while open, and keeps it on this iPhone.",
                 actionTitle: "Use Approximate Location"
-            ) { solarPlace.request() }
-        case .denied, .restricted:
+            ) { location.start() }
+        case .denied:
             AccessGate(
                 title: "Location access is off",
                 message: "Bogentag needs your approximate location to find the Sun's arc where you are. Turn it on for Bogentag in Settings, under Location.",
                 actionTitle: "Open Settings",
                 action: openSettings
             )
-        default:
+        case .waiting, .fixed:
             ProgressView("Finding where you are")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Palette.night)

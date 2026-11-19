@@ -2,13 +2,16 @@
 
 Bogentag is the iPhone, iPad and Apple Watch app for Bogenzeit, the time standard whose spec,
 reference and vectors are in excelano/bogenzeit; the spec there is normative and no definition in it
-changes without David. On the iPhone and iPad it is a calendar that shows the calendars on the
-device, read through EventKit, laid out in Bogenzeit (`Bogentag/`, `docs/concept.md`). On the watch
-the dial is the main screen, with the timer, stopwatch, day and settings pages and the complications
-(`Bogentag Watch App/`, `BogentagWidgets/`, both built from `Shared/`; `docs/bogentag-spec.md` is the
-face spec). The engine, the display forms (`Scale`, `Precision`, `DisplayedPosition`) and the drawn
-glyphs come from the Swift package excelano/bogenzeit-swift, depended on by URL; a change to any of
-them is made there and released as a new tag.
+changes without David. On the iPhone and iPad it opens on a calendar that shows the calendars on
+the device, read through EventKit, laid out in Bogenzeit (`docs/concept.md`), with the dial, its timer
+and stopwatch and the About Bogenzeit tour in a second tab; its widgets and the timer's Live Activity
+are in `BogentagPhoneWidgets/`. On the watch the dial is the main screen, with the timer, stopwatch,
+day and settings pages and the complications (`Bogentag Watch App/`, `BogentagWidgets/`).
+`docs/bogentag-spec.md` is the face spec. `Bogentag/` holds what only the iPhone and iPad app
+compiles, and `Shared/` what it shares with the watch app; each widget extension takes its files
+from `Shared/` by name in the project file. The engine, the display forms (`Scale`, `Precision`,
+`DisplayedPosition`) and the drawn glyphs come from the Swift package excelano/bogenzeit-swift,
+depended on by URL; a change to any of them is made there and released as a new tag.
 
 The only events Bogentag creates are moments, zero-length events with an alert at their start, set
 from the day column. An event's start and end are set in Bogenzeit from its details; everything else
@@ -21,14 +24,16 @@ opened from there too.
     xcremote install                                # onto David's iPhone and watch, as ~/notes/shipping.md says
     xcodebuild test -scheme "Bogentag Watch App"    # on the Mac, on a watch simulator; reboot the simulator after
 
-`ship.toml` (gitignored) carries the API key xcremote signs with. Signing is automatic. The watch app
-and its widgets share the app group `BOGENTAG_APP_GROUP` (`Config/Bogentag.xcconfig`, named again in
+`ship.toml` (gitignored) carries the API key xcremote signs with. Signing is automatic. Each app and
+its own widgets share the app group `BOGENTAG_APP_GROUP` (`Config/Bogentag.xcconfig`, named again in
 `Shared/Support/AppGroup.swift`).
 
-A Debug build launched with `--demo` shows a made-up week in Houston on the iPhone and Houston on the
-spec's worked day on the watch; `packaging/ios/shots.sh` takes the store screenshots from both. On the
-watch, `--page spans` (or `kiloseconds`, `timer`, `stopwatch`, `day`, `settings`), `--civil` and
-`--precision` (`low`, `medium`, `high`) pick what shows.
+A Debug build launched with `--demo` shows a made-up week in Houston in the calendar and Houston on
+the spec's worked day on the dial; `packaging/ios/shots.sh` takes the store screenshots from both. The
+calendar takes `--date`, `--zoom` and `--event`. `--page spans` or `kiloseconds` opens on that dial (the
+Dial tab on the iPhone), and `--civil` and `--precision` (`low`, `medium`, `high`) set it; on the iPhone
+`--page timer`, `stopwatch`, `tour` (with `--tour-page`) or `gallery`, which renders every widget at its
+sizes, and on the watch `--page timer`, `stopwatch`, `day` or `settings`.
 
 The icon is drawn in `Icon/AppIcon.svg`, which renders both `icon-light.png` and
 `icon-dark.png` and the watch's `AppIcon.png`, and `Icon/AppIcon-tinted.svg`. Render

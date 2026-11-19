@@ -6,7 +6,7 @@ import Foundation
 
 /// The calendars on this iPhone, read through EventKit, and which of them
 /// the person has chosen to hide.
-@Observable
+@MainActor @Observable
 final class CalendarStore {
     private(set) var access = EKEventStore.authorizationStatus(for: .event)
     private(set) var calendars: [EKCalendar] = []
@@ -16,7 +16,7 @@ final class CalendarStore {
     @ObservationIgnored private let store = EKEventStore()
 
     init() {
-        hiddenIDs = Set(UserDefaults.standard.stringArray(forKey: SettingKey.hiddenCalendars) ?? [])
+        hiddenIDs = Set(UserDefaults.standard.stringArray(forKey: Settings.hiddenCalendarsKey) ?? [])
         reload()
     }
 
@@ -35,7 +35,7 @@ final class CalendarStore {
         storeChanges += 1
         if Demo.active {
             access = .fullAccess
-            calendars = Demo.calendars
+            calendars = CalendarDemo.calendars
             return
         }
         access = EKEventStore.authorizationStatus(for: .event)
@@ -74,7 +74,7 @@ final class CalendarStore {
         } else {
             hiddenIDs.insert(calendar.calendarIdentifier)
         }
-        UserDefaults.standard.set(Array(hiddenIDs), forKey: SettingKey.hiddenCalendars)
+        UserDefaults.standard.set(Array(hiddenIDs), forKey: Settings.hiddenCalendarsKey)
     }
 
     func editingStore(for event: EKEvent) -> EKEventStore? {
@@ -100,7 +100,7 @@ final class CalendarStore {
         _ = storeChanges
         let visible = calendars.filter(isVisible)
         guard !visible.isEmpty else { return [] }
-        if Demo.active { return Demo.events(from: start, to: end, in: visible) }
+        if Demo.active { return CalendarDemo.events(from: start, to: end, in: visible) }
         return store.events(matching: store.predicateForEvents(withStart: start, end: end, calendars: visible))
     }
 }

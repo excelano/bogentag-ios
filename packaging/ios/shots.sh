@@ -2,10 +2,11 @@
 # The App Store screenshots, as recipes. shots-appstore builds the app for the
 # simulator, boots each simulator ship.toml names, installs the app, and calls
 # this with the simulator, the language and where the frames go. The scenes
-# are the Debug launch arguments the Demo.swift files read: on the iPhone and
-# iPad, Bogentag/Demo.swift's made-up week in Houston, opened on a November
-# Wednesday; on the watch, embedded in the iPhone app, Shared/Support/Demo.swift's
-# Houston on the spec's worked day, each dial and the civil view over each.
+# are the Debug launch arguments the app reads: on the iPhone and iPad,
+# Bogentag/CalendarDemo.swift's made-up week in Houston, opened on a November
+# Wednesday, then the dial and the tour on Shared/Support/Demo.swift's worked
+# day; on the watch, embedded in the iPhone app, Houston on that worked day,
+# each dial and the civil view over each.
 #
 #     ./packaging/ios/shots.sh --app <Bogentag.app> --device <udid> --lang en-us --outdir <dir>
 #
@@ -53,5 +54,7 @@ else
     shot 02-whole-day --demo --zoom 1.5
     shot 03-event --demo --event "Design review"
     shot 04-june --demo --date 2026-06-17
+    shot 05-dial --demo --page spans
+    shot 06-tour --demo --page tour
 fi
 xcrun simctl terminate "$device" "$bundle" >/dev/null 2>&1 || true

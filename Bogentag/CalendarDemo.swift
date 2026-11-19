@@ -5,9 +5,9 @@ import EventKit
 import Foundation
 import UIKit
 
-enum Demo {
+@MainActor
+enum CalendarDemo {
     #if DEBUG
-    static let active = CommandLine.arguments.contains("--demo")
     static let date: Date? = argument(after: "--date").flatMap { try? Date("\($0)T12:00:00-06:00", strategy: .iso8601) }
     static let zoom: Double? = argument(after: "--zoom").flatMap(Double.init)
     static let event: String? = argument(after: "--event")
@@ -18,17 +18,15 @@ enum Demo {
         return arguments[index + 1]
     }
     #else
-    static let active = false
     static let date: Date? = nil
     static let zoom: Double? = nil
     static let event: String? = nil
     #endif
 
-    static let place = Place(latitude: 29.76, longitude: -95.37)
     static let instant = try! Date("2026-11-04T16:20:00Z", strategy: .iso8601)
 
     static func now(_ date: Date) -> Date {
-        active ? instant : date
+        Demo.active ? instant : date
     }
 
     static let calendars: [EKCalendar] = [("Work", 0xF0A04B), ("Home", 0x6BC490), ("Family", 0xD27BD8)].map { title, hex in

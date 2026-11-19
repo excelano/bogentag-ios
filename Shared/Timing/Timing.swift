@@ -17,7 +17,7 @@ struct Elapsed: Codable, Equatable, Sendable {
         self.spans = spans
     }
 
-    init(from start: Date, to end: Date, at place: AppGroup.Place) {
+    init(from start: Date, to end: Date, at place: Place) {
         let duration = SolarDuration(from: start, to: end, latitude: place.latitude, longitude: place.longitude)
         self.init(seconds: duration.seconds, spans: duration.spans)
     }
@@ -34,11 +34,11 @@ struct Elapsed: Codable, Equatable, Sendable {
 struct SpanTimer: Codable, Equatable, Sendable {
     let unit: TimerUnit
     let amount: Double
-    var place: AppGroup.Place
+    var place: Place
     var end: Date?
     var left: Double
 
-    static func end(after amount: Double, _ unit: TimerUnit, from now: Date, at place: AppGroup.Place) -> Date? {
+    static func end(after amount: Double, _ unit: TimerUnit, from now: Date, at place: Place) -> Date? {
         switch unit {
         case .spans:
             Reading(at: now, latitude: place.latitude, longitude: place.longitude).after(spans: amount)
@@ -62,7 +62,7 @@ struct SpanTimer: Codable, Equatable, Sendable {
 }
 
 struct Stopwatch: Codable, Equatable, Sendable {
-    var place: AppGroup.Place
+    var place: Place
     var since: Date?
     var banked = Elapsed.zero
     var laps: [Elapsed] = []
@@ -99,7 +99,7 @@ final class Timing {
         #endif
     }
 
-    func startTimer(_ amount: Double, _ unit: TimerUnit, at now: Date, place: AppGroup.Place) {
+    func startTimer(_ amount: Double, _ unit: TimerUnit, at now: Date, place: Place) {
         guard let end = SpanTimer.end(after: amount, unit, from: now, at: place) else { return }
         let started = SpanTimer(unit: unit, amount: amount, place: place, end: end, left: amount)
         timer = started
@@ -114,7 +114,7 @@ final class Timing {
         withdraw()
     }
 
-    func resumeTimer(at now: Date, place: AppGroup.Place) {
+    func resumeTimer(at now: Date, place: Place) {
         guard var resumed = timer, resumed.end == nil,
               let end = SpanTimer.end(after: resumed.left, resumed.unit, from: now, at: place) else { return }
         resumed.place = place
@@ -128,7 +128,7 @@ final class Timing {
         withdraw()
     }
 
-    func runStopwatch(at now: Date, place: AppGroup.Place) {
+    func runStopwatch(at now: Date, place: Place) {
         var running = stopwatch ?? Stopwatch(place: place)
         guard running.since == nil else { return }
         running.since = now

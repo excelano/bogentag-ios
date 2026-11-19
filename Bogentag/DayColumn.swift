@@ -34,7 +34,7 @@ struct DaySky: View {
                 (axis.solar.astronomical, Palette.astronomicalTwilight),
                 (axis.solar.nautical, Palette.nauticalTwilight),
                 (axis.solar.civil, Palette.civilTwilight),
-                (axis.solar.horizon, Palette.day),
+                (axis.solar.horizon, Palette.columnDay),
             ]
             for (arc, color) in bands {
                 guard let extent = axis.extent(of: arc) else { continue }
@@ -125,7 +125,7 @@ struct DayLane: View {
             MomentSheet(instant: draft.instant, axis: axis, readout: readout, calendars: calendars)
         }
         .accessibilityAction(named: "Set a moment") {
-            let now = Demo.now(.now)
+            let now = CalendarDemo.now(.now)
             draft = MomentDraft(instant: axis.contains(now) ? now : axis.solar.noon)
         }
     }
@@ -174,7 +174,7 @@ struct DayLane: View {
 
     private var nowLine: some View {
         TimelineView(.periodic(from: .now, by: 15)) { timeline in
-            let now = Demo.now(timeline.date)
+            let now = CalendarDemo.now(timeline.date)
             if axis.contains(now) {
                 let lineY = y(axis.position(of: now))
                 ZStack(alignment: .topTrailing) {
@@ -243,7 +243,7 @@ private struct EventBlock: View {
                 .frame(idealWidth: 400, idealHeight: 600)
         }
         .onAppear {
-            if Demo.event == event.title { showsDetail = true }
+            if CalendarDemo.event == event.title { showsDetail = true }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(event.title ?? ""), \(readout.spokenRange(from: event.startDate, to: event.endDate))")

@@ -149,7 +149,7 @@ struct DayPage: View {
     private func initialOffset(_ columns: [Column]) -> CGFloat {
         let target: Double
         if let current = columns.first(where: { $0.id == today }) {
-            target = current.axis.position(of: Demo.now(.now))
+            target = current.axis.position(of: CalendarDemo.now(.now))
         } else {
             target = columns.flatMap { column in
                 column.events.filter { !$0.isAllDay && column.axis.contains($0.startDate) }.map { column.axis.position(of: $0.startDate) }

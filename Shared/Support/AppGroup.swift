@@ -4,17 +4,17 @@
 
 import Foundation
 
+struct Place: Codable, Equatable, Sendable {
+    var latitude: Double
+    var longitude: Double
+}
+
 /// What each app leaves for its own widgets: the coordinates in use.
 enum AppGroup {
     /// Config/Bogentag.xcconfig derives the same id for the entitlements.
     static let identifier = "group.com.excelano.bogentag"
 
     static var defaults: UserDefaults { UserDefaults(suiteName: identifier) ?? .standard }
-
-    struct Place: Codable, Equatable, Sendable {
-        var latitude: Double
-        var longitude: Double
-    }
 
     private static let placeKey = "place"
 
@@ -25,5 +25,9 @@ enum AppGroup {
 
     static func save(_ place: Place) {
         defaults.set(try? JSONEncoder().encode(place), forKey: placeKey)
+    }
+
+    static func forgetPlace() {
+        defaults.removeObject(forKey: placeKey)
     }
 }

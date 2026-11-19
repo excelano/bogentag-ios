@@ -15,10 +15,10 @@ struct DayPager: View {
     private static let laneWidth: CGFloat = 200
     private static let weekLaneWidth: CGFloat = 150
 
-    @AppStorage(SettingKey.scale) private var scale = Scale.standard.rawValue
-    @AppStorage(SettingKey.precision) private var precision = Precision.standard.rawValue
-    @AppStorage(SettingKey.showsCivilTime) private var showsCivilTime = true
-    @AppStorage(SettingKey.pointsPerSpan) private var pointsPerSpan = DayColumn.standardPointsPerSpan
+    @AppStorage(Settings.dialVariantKey, store: AppGroup.defaults) private var scale = Scale.standard.rawValue
+    @AppStorage(Settings.precisionKey) private var precision = Precision.standard.rawValue
+    @AppStorage(Settings.showsCivilTimeKey) private var showsCivilTime = true
+    @AppStorage(Settings.pointsPerSpanKey) private var pointsPerSpan = DayColumn.standardPointsPerSpan
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.horizontalSizeClass) private var sizeClass
 
@@ -32,12 +32,12 @@ struct DayPager: View {
         self.place = place
         self.calendars = calendars
         let today = Self.today(at: place)
-        let opening = Demo.date.map { CalendarDay(civil: $0).daysSinceEpoch } ?? today
+        let opening = CalendarDemo.date.map { CalendarDay(civil: $0).daysSinceEpoch } ?? today
         _today = State(initialValue: today)
         _center = State(initialValue: opening)
         _selection = State(initialValue: opening)
         if Demo.active {
-            UserDefaults.standard.set(Demo.zoom ?? DayColumn.standardPointsPerSpan, forKey: SettingKey.pointsPerSpan)
+            UserDefaults.standard.set(CalendarDemo.zoom ?? DayColumn.standardPointsPerSpan, forKey: Settings.pointsPerSpanKey)
         }
     }
 
@@ -160,7 +160,7 @@ struct DayPager: View {
     }
 
     private static func today(at place: Place) -> Int {
-        bogenzeitDay(of: Demo.now(.now), longitude: place.longitude).daysSinceEpoch
+        bogenzeitDay(of: CalendarDemo.now(.now), longitude: place.longitude).daysSinceEpoch
     }
 }
 
