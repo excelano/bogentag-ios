@@ -4,10 +4,11 @@
 import Bogenzeit
 import SwiftUI
 
-struct DialTab: View {
+struct DialSheet: View {
     @Environment(SunLocation.self) private var location
     @Environment(Timing.self) private var timing
     @Environment(CalendarStore.self) private var calendars
+    @Environment(\.dismiss) private var dismiss
 
     @AppStorage("tourSeen") private var tourSeen = false
     @State private var showsTour = false
@@ -43,6 +44,9 @@ struct DialTab: View {
         NavigationStack {
             dialAndButtons
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Done") { dismiss() }
+                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button { showsSettings = true } label: { Image(systemName: "gearshape") }
                             .accessibilityLabel("Settings")

@@ -27,6 +27,7 @@ struct DayPager: View {
     @State private var selection: Int
     @State private var showsSettings = false
     @State private var showsDatePicker = false
+    @State private var showsDial = Demo.page != nil
 
     init(place: Place, calendars: CalendarStore) {
         self.place = place
@@ -84,8 +85,14 @@ struct DayPager: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Today") { go(to: today) }
-                        .disabled(selection == today)
+                    TimelineView(.periodic(from: .now, by: 1)) { timeline in
+                        let position = readout.position(at: CalendarDemo.now(timeline.date))
+                        Button { showsDial = true } label: {
+                            PositionLabel(position, style: .subheadline, weight: .semibold, color: Palette.sun)
+                        }
+                        .accessibilityLabel("Dial")
+                        .accessibilityValue(readout.spoken(position))
+                    }
                 }
                 ToolbarItem(placement: .principal) {
                     Button { showsDatePicker = true } label: {
@@ -110,9 +117,13 @@ struct DayPager: View {
         .sheet(isPresented: $showsSettings) {
             SettingsView(calendars: calendars, place: place)
         }
+        .sheet(isPresented: $showsDial) {
+            DialSheet()
+        }
         .sheet(isPresented: $showsDatePicker) {
-            DateJumpSheet(initial: CalendarDay(daysSinceEpoch: selection).civilInterval.start) {
-                go(to: CalendarDay(civil: $0).daysSinceEpoch)
+            DateJumpSheet(initial: CalendarDay(daysSinceEpoch: selection).civilInterval.start,
+                          showsToday: selection != today) {
+                go(to: $0.map { CalendarDay(civil: $0).daysSinceEpoch } ?? today)
             }
         }
         .onChange(of: scenePhase) { _, phase in
@@ -165,12 +176,14 @@ struct DayPager: View {
 }
 
 private struct DateJumpSheet: View {
-    let onPick: (Date) -> Void
+    let showsToday: Bool
+    let onPick: (Date?) -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var date: Date
 
-    init(initial: Date, onPick: @escaping (Date) -> Void) {
+    init(initial: Date, showsToday: Bool, onPick: @escaping (Date?) -> Void) {
+        self.showsToday = showsToday
         self.onPick = onPick
         _date = State(initialValue: initial)
     }
@@ -189,6 +202,13 @@ private struct DateJumpSheet: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button("Cancel") { dismiss() }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Today") {
+                            onPick(nil)
+                            dismiss()
+                        }
+                        .disabled(!showsToday)
                     }
                 }
         }

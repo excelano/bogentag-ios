@@ -4,7 +4,7 @@ Bogentag is the iPhone, iPad and Apple Watch app for Bogenzeit, the time standar
 reference and vectors are in excelano/bogenzeit; the spec there is normative and no definition in it
 changes without David. On the iPhone and iPad it opens on a calendar that shows the calendars on
 the device, read through EventKit, laid out in Bogenzeit (`docs/concept.md`), with the dial, its timer
-and stopwatch and the About Bogenzeit tour in a second tab; its widgets and the timer's Live Activity
+and stopwatch and the About Bogenzeit tour in a sheet opened from the calendar's toolbar; its widgets and the timer's Live Activity
 are in `BogentagPhoneWidgets/`. On the watch the dial is the main screen, with the timer, stopwatch,
 day and settings pages and the complications (`Bogentag Watch App/`, `BogentagWidgets/`).
 `docs/bogentag-spec.md` is the face spec. `Bogentag/` holds what only the iPhone and iPad app
@@ -30,8 +30,8 @@ its own widgets share the app group `BOGENTAG_APP_GROUP` (`Config/Bogentag.xccon
 
 A Debug build launched with `--demo` shows a made-up week in Houston in the calendar and Houston on
 the spec's worked day on the dial; `packaging/ios/shots.sh` takes the store screenshots from both. The
-calendar takes `--date`, `--zoom` and `--event`. `--page spans` or `kiloseconds` opens on that dial (the
-Dial tab on the iPhone), and `--civil` and `--precision` (`low`, `medium`, `high`) set it; on the iPhone
+calendar takes `--date`, `--zoom` and `--event`. `--page spans` or `kiloseconds` opens on that dial (over the
+calendar on the iPhone), and `--civil` and `--precision` (`low`, `medium`, `high`) set it; on the iPhone
 `--page timer`, `stopwatch`, `tour` (with `--tour-page`) or `gallery`, which renders every widget at its
 sizes, and on the watch `--page timer`, `stopwatch`, `day` or `settings`.
 

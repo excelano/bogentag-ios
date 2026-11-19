@@ -6,30 +6,20 @@ import SwiftUI
 import UIKit
 
 struct ContentView: View {
-    enum Tab {
-        case calendar
-        case dial
-    }
-
     @Environment(SunLocation.self) private var location
     @State private var calendars = CalendarStore()
-    @State private var tab: Tab = Demo.page == nil ? .calendar : .dial
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openURL) private var openURL
 
     var body: some View {
         Group {
             if let place = location.place {
-                TabView(selection: $tab) {
-                    calendar(at: place)
-                        .tabItem { Label("Calendar", systemImage: "calendar") }
-                        .tag(Tab.calendar)
-                    DialTab()
-                        .tabItem { Label("Dial", systemImage: "sun.max") }
-                        .tag(Tab.dial)
+                if calendars.access == .fullAccess {
+                    DayPager(place: place, calendars: calendars)
+                        .environment(calendars)
+                } else {
+                    calendarGate
                 }
-                .tint(Palette.sun)
-                .environment(calendars)
             } else {
                 locationGate
             }
@@ -44,14 +34,6 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged).receive(on: RunLoop.main)) { _ in
             calendars.reload()
-        }
-    }
-
-    @ViewBuilder private func calendar(at place: Place) -> some View {
-        if calendars.access == .fullAccess {
-            DayPager(place: place, calendars: calendars)
-        } else {
-            calendarGate
         }
     }
 
