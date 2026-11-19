@@ -27,7 +27,7 @@ struct DayPager: View {
     @State private var selection: Int
     @State private var showsSettings = false
     @State private var showsDatePicker = false
-    @State private var showsDial = Demo.page != nil
+    @State private var showsDial = Demo.page.map { $0 != "tour" } ?? false
 
     init(place: Place, calendars: CalendarStore) {
         self.place = place

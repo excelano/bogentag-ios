@@ -6,7 +6,7 @@ import Bogenzeit
 import BogenzeitUI
 import SwiftUI
 
-/// The explainer (Bogentag spec §5): nine pages, one per topic, each with
+/// The explainer (Bogentag spec §5): ten pages, one per topic, each with
 /// a live piece of the dial computed for the place in use, so the numbers on
 /// the page are the reader's own.
 struct TourView: View {
@@ -115,7 +115,63 @@ struct TourView: View {
                     CivilView(reading: reading, now: reading.instant)
                 }
             },
+            TourPage(title: "Your calendar", text: """
+            The calendar lays your days out on the same arc. Each day runs from {midnight} to {midnight} with every span the same height, so sunrise, {noon} and sunset sit at the same heights every day and your events move with the seasons instead. The yellow line is now, and the reading above the calendar opens the dial. Touch and hold the day to read any moment in it; hold still until you feel a tap, and let go to set a moment there.
+            """) {
+                ColumnSketch(reading: reading)
+            },
         ]
+    }
+}
+
+struct ColumnSketch: View {
+    let reading: Reading
+
+    private let height: CGFloat = 280
+    private let width: CGFloat = 120
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            ZStack(alignment: .topTrailing) {
+                ForEach(Array(marks.enumerated()), id: \.offset) { _, mark in
+                    GlyphView(mark.glyph, radius: 7, lineWidth: 1.8, color: Palette.label)
+                        .position(x: 10, y: y(mark.place))
+                }
+            }
+            .frame(width: 20, height: height)
+            ZStack(alignment: .top) {
+                VStack(spacing: 0) {
+                    Palette.nauticalTwilight.frame(height: y(100))
+                    Palette.columnDay.frame(height: y(200))
+                    Palette.nauticalTwilight.frame(height: y(100))
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+                if let place = reading.placeInDay {
+                    Rectangle()
+                        .fill(Palette.sun)
+                        .frame(height: 1.5)
+                        .offset(y: y(place) - 0.75)
+                    PositionLabel(DisplayedPosition(reading, scale: Settings.dialVariant, precision: .standard),
+                                  style: .caption, weight: .semibold, color: Palette.sun)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Palette.night.opacity(0.92), in: Capsule())
+                        .offset(y: max(0, y(place) - 26))
+                }
+            }
+            .frame(width: width, height: height)
+        }
+        .accessibilityHidden(true)
+    }
+
+    private var marks: [(glyph: Glyph, place: Double)] {
+        let night: [(glyph: Glyph, place: Double)] = [(.midnight, 0), (.midnight, 400)]
+        guard reading.placeInDay != nil else { return night }
+        return night + [(.sunrise, 100), (.noon, 200), (.sunset, 300)]
+    }
+
+    private func y(_ place: Double) -> CGFloat {
+        CGFloat(place / 400) * height
     }
 }
 

@@ -66,6 +66,7 @@ The app explains Bogenzeit to someone with no context in a paged tour, one page 
 7. The eight eighths, Afterrise to Forerise.
 8. Why the date changes at ○.
 9. Tap for civil time.
+10. The calendar: equal spans from ○ to ○, the now line, the reading that opens the dial, and setting a moment by holding the day.
 
 ---
 

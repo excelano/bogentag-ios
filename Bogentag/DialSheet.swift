@@ -10,8 +10,6 @@ struct DialSheet: View {
     @Environment(CalendarStore.self) private var calendars
     @Environment(\.dismiss) private var dismiss
 
-    @AppStorage("tourSeen") private var tourSeen = false
-    @State private var showsTour = false
     @State private var panel: Panel?
     @State private var showsSettings = false
 
@@ -78,16 +76,12 @@ struct DialSheet: View {
         }
         .padding(.horizontal)
         .onAppear {
-            if (!tourSeen && !Demo.active) || Demo.page == "tour" { showsTour = true }
             panel = Demo.page.flatMap(Panel.init)
         }
         .sheet(isPresented: $showsSettings) {
             if let place = location.place {
                 SettingsView(calendars: calendars, place: place)
             }
-        }
-        .sheet(isPresented: $showsTour, onDismiss: { tourSeen = true }) {
-            TourView().environment(location)
         }
         .sheet(item: $panel) { panel in
             NavigationStack {
