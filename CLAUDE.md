@@ -31,7 +31,7 @@ its own widgets share the app group `BOGENTAG_APP_GROUP` (`Config/Bogentag.xccon
 A Debug build launched with `--demo` shows a made-up week in Houston in the calendar and Houston on
 the spec's worked day on the dial; `packaging/ios/shots.sh` takes the store screenshots from both. The
 calendar takes `--date`, `--zoom` and `--event`. `--page spans` or `kiloseconds` opens on that dial (over the
-calendar on the iPhone), and `--civil` and `--precision` (`low`, `medium`, `high`) set it; on the iPhone
+calendar on the iPhone), and `--civil` and `--precision` (`low`, `medium`, `high`) set it, and `--at` with an RFC 3339 instant reads the demo place at that instant; on the iPhone
 `--page timer`, `stopwatch`, `tour` (with `--tour-page`) or `gallery`, which renders every widget at its
 sizes, and on the watch `--page timer`, `stopwatch`, `day` or `settings`.
 

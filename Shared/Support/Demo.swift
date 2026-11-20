@@ -16,6 +16,8 @@ import Foundation
 ///     --precision high  show the readout at that precision (low, medium, high)
 ///     --page tour --tour-page 5
 ///                     open the explainer on that page, counted from 0 (iPhone)
+///     --at 2026-06-21T15:30:00Z
+///                     read the demo place at that instant instead
 enum Demo {
     #if DEBUG
     static let active = CommandLine.arguments.contains("--demo")
@@ -25,6 +27,7 @@ enum Demo {
         Precision.allCases.first { "\($0)" == name }
     }
     static let tourPage: Int? = argument(after: "--tour-page").flatMap(Int.init)
+    static let instant = argument(after: "--at").flatMap(Date.init(rfc3339:)) ?? workedExample
 
     private static func argument(after flag: String) -> String? {
         let arguments = CommandLine.arguments
@@ -37,10 +40,11 @@ enum Demo {
     static let page: String? = nil
     static let precision: Precision? = nil
     static let tourPage: Int? = nil
+    static let instant = workedExample
     #endif
 
     static let place = Place(latitude: 29.76, longitude: -95.37)
-    static let instant = Date(rfc3339: "2026-11-01T17:08:00Z")!
+    private static let workedExample = Date(rfc3339: "2026-11-01T17:08:00Z")!
 
     static func now(_ date: Date) -> Date {
         active ? instant : date
