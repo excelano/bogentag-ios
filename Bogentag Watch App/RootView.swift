@@ -23,6 +23,7 @@ struct RootView: View {
 
     enum Page: String {
         case dial
+        case agenda
         case timer
         case stopwatch
         case day
@@ -36,6 +37,7 @@ struct RootView: View {
     private var content: some View {
         TabView(selection: $page) {
             DialScreen().tag(Page.dial)
+            AgendaScreen().tag(Page.agenda)
             TimerScreen().tag(Page.timer)
             StopwatchScreen().tag(Page.stopwatch)
             DayScreen().tag(Page.day)

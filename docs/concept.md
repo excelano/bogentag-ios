@@ -77,6 +77,22 @@ above the column. An event that crosses ○ is drawn in each day for the part of
 that falls there. The edge of the column carries span marks, and civil times
 appear on the events when Show civil time is on in Settings.
 
+## On the watch
+
+The watch has an agenda page, after the dial: what is left of the current Bogenzeit
+day, from ○ to ○, in the calendars on the watch. Each timed event that has not ended
+is shown at its start position in the dial's unit, at low precision, with its
+calendar's color and title; all-day events are left out.
+An event under way is shown in the Sun's color, and a tap on an event shows its civil
+start and end. The watch reads its calendars and changes nothing; it asks for its own
+full access to events, and the calendars it holds and the days they cover are the
+ones the iPhone's Watch app syncs to it. The calendars hidden in the iPhone app are
+hidden on the watch too: the iPhone sends their identifiers, titles and account names
+as the watch app's WatchConnectivity application context whenever the list changes,
+and the watch keeps the last list it received and leaves out a calendar that matches
+one by identifier, or by title and account name. A watch with no iPhone app sending a
+list shows every calendar.
+
 ## Platform and data
 
 iPhone and iPad from the same SwiftUI views. The iPhone shows one day; the iPad

@@ -8,7 +8,7 @@
 # description 4,000, apple-review-notes 4,000.
 
 apple-review-notes = """
-Bogentag shows time by the Sun's position on its daily arc instead of by the clock. On iPhone and iPad it opens on a calendar: the events already on the device, read through EventKit, laid out by where the Sun will be. A dial, a timer, a stopwatch and a ten-page explainer open from the calendar. The Apple Watch app, delivered inside the iPhone app, shows the dial and has complications; it needs no iPhone nearby. The only events Bogentag creates are moments the person sets: zero-length events with an alert at their start. It needs no account and no network connection.
+Bogentag shows time by the Sun's position on its daily arc instead of by the clock. On iPhone and iPad it opens on a calendar: the events already on the device, read through EventKit, laid out by where the Sun will be. A dial, a timer, a stopwatch and a ten-page explainer open from the calendar. The Apple Watch app, delivered inside the iPhone app, shows the dial and the rest of the day's events and has complications; it needs no iPhone nearby. The only events Bogentag creates are moments the person sets: zero-length events with an alert at their start. It needs no account and no network connection.
 
 PERMISSIONS
 On first launch the explainer opens; close it to go on. Bogentag then asks for location while using the app, because solar noon, sunrise and sunset depend on where you are, and for full calendar access, because reading the day's events needs it; write-only access cannot read them. Each request follows a screen that explains it, and without either permission the app shows that explanation and nothing else. Starting a timer asks to send notifications, used only for the one that says the timer has ended. The watch app asks for location on first open.
@@ -26,10 +26,10 @@ WHAT TO TRY ON IPHONE AND IPAD
 7. On iPad, several days stand side by side on one scale of spans.
 
 ON APPLE WATCH
-Turn the Digital Crown: the dial, the timer, the stopwatch, a page with today's figures, and Settings. Tap the dial for the clock. Complications fit the circular, corner, rectangular and inline slots and show the current reading.
+Turn the Digital Crown: the dial, the rest of today's events at their places on the arc, the timer, the stopwatch, a page with today's figures, and Settings. Tap the dial for the clock. Complications fit the circular, corner, rectangular and inline slots and show the current reading.
 
 DATA
-Calendar data stays in the device's calendar database. Location is read on the device and the coordinates in use are kept in the app's storage, shared only with its own widgets and complications. Nothing is sent anywhere. Privacy policy: https://excelano.com/legal/#bogentag. Source code: https://github.com/excelano/bogentag-ios.
+Calendar data stays in the device's calendar database. Location is read on the device and the coordinates in use are kept in the app's storage, shared only with its own widgets and complications. Nothing is sent anywhere except the list of hidden calendars, from the iPhone to your own Apple Watch. Privacy policy: https://excelano.com/legal/#bogentag. Source code: https://github.com/excelano/bogentag-ios.
 """
 
 [locales."en-us"]
@@ -49,7 +49,7 @@ The reading above the calendar opens the dial. The dial is a sky: blue above the
 
 A timer and a stopwatch count in spans as well as kiloseconds. A span timer ends when the Sun has moved that many spans along its arc; before you start, it shows how long that will take. While it runs, an arc on the dial reaches from the Sun to where it ends, the Lock Screen shows it, and a notification tells you when it has ended.
 
-On Apple Watch the dial is the main screen. Turn the Digital Crown for the timer, the stopwatch, a page of today's figures and the settings. Complications put the reading on your watch face in the circular, corner, rectangular and inline slots, and widgets put it on your iPhone's Home Screen and Lock Screen.
+On Apple Watch the dial is the main screen. Turn the Digital Crown for the rest of today's events, each at its place on the arc, the timer, the stopwatch, a page of today's figures and the settings. Complications put the reading on your watch face in the circular, corner, rectangular and inline slots, and widgets put it on your iPhone's Home Screen and Lock Screen.
 
 A short tour explains the system: the arc, the two anchors, spans, kiloseconds, how to read the notation, the four quarters and the eight eighths, and why the date changes at solar midnight rather than at twelve o'clock.
 

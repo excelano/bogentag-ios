@@ -5,8 +5,8 @@ reference and vectors are in excelano/bogenzeit; the spec there is normative and
 changes without David. On the iPhone and iPad it opens on a calendar that shows the calendars on
 the device, read through EventKit, laid out in Bogenzeit (`docs/concept.md`), with the dial, its timer
 and stopwatch and the About Bogenzeit tour in a sheet opened from the calendar's toolbar; its widgets and the timer's Live Activity
-are in `BogentagPhoneWidgets/`. On the watch the dial is the main screen, with the timer, stopwatch,
-day and settings pages and the complications (`Bogentag Watch App/`, `BogentagWidgets/`).
+are in `BogentagPhoneWidgets/`. On the watch the dial is the main screen, with the agenda (the rest of the
+day's events from the calendars on the watch, read-only), timer, stopwatch, day and settings pages and the complications (`Bogentag Watch App/`, `BogentagWidgets/`).
 `docs/bogentag-spec.md` is the face spec. `Bogentag/` holds what only the iPhone and iPad app
 compiles, and `Shared/` what it shares with the watch app; each widget extension takes its files
 from `Shared/` by name in the project file. The engine, the display forms (`Scale`, `Precision`,
@@ -33,7 +33,7 @@ the spec's worked day on the dial; `packaging/ios/shots.sh` takes the store scre
 calendar takes `--date`, `--zoom` and `--event`. `--page spans` or `kiloseconds` opens on that dial (over the
 calendar on the iPhone), and `--civil` and `--precision` (`low`, `medium`, `high`) set it, and `--at` with an RFC 3339 instant reads the demo place at that instant; on the iPhone
 `--page timer`, `stopwatch`, `tour` (with `--tour-page`) or `gallery`, which renders every widget at its
-sizes, and on the watch `--page timer`, `stopwatch`, `day` or `settings`.
+sizes, and on the watch `--page agenda`, `timer`, `stopwatch`, `day` or `settings`, the agenda showing the calendar's demo week.
 
 The icon is drawn in `Icon/AppIcon.svg`, which renders both `icon-light.png` and
 `icon-dark.png` and the watch's `AppIcon.png`, and `Icon/AppIcon-tinted.svg`. Render

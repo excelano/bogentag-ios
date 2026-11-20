@@ -4,7 +4,7 @@
 import EventKit
 import Foundation
 
-/// The calendars on this iPhone, read through EventKit, and which of them
+/// The calendars on this device, read through EventKit, and which of them
 /// the person has chosen to hide.
 @MainActor @Observable
 final class CalendarStore {
@@ -14,7 +14,7 @@ final class CalendarStore {
     private(set) var storeChanges = 0
     private(set) var requesting = false
 
-    @ObservationIgnored private let store = EKEventStore()
+    @ObservationIgnored let store = EKEventStore()
     @ObservationIgnored private var granted = false
 
     init() {
@@ -33,11 +33,6 @@ final class CalendarStore {
         }
     }
 
-    func refresh() {
-        if !Demo.active { store.refreshSourcesIfNecessary() }
-        reload()
-    }
-
     func reload() {
         storeChanges += 1
         if Demo.active {
@@ -54,23 +49,6 @@ final class CalendarStore {
             .sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }
     }
 
-    func edited(_ event: EKEvent) {
-        if !Demo.active { event.refresh() }
-        reload()
-    }
-
-    func retime(_ event: EKEvent, start: Date, end: Date, span: EKSpan) throws {
-        event.startDate = start
-        event.endDate = end
-        do {
-            try store.save(event, span: span, commit: true)
-        } catch {
-            event.rollback()
-            throw error
-        }
-        reload()
-    }
-
     func isVisible(_ calendar: EKCalendar) -> Bool {
         !hiddenIDs.contains(calendar.calendarIdentifier)
     }
@@ -82,25 +60,6 @@ final class CalendarStore {
             hiddenIDs.insert(calendar.calendarIdentifier)
         }
         UserDefaults.standard.set(Array(hiddenIDs), forKey: Settings.hiddenCalendarsKey)
-    }
-
-    func editingStore(for event: EKEvent) -> EKEventStore? {
-        Demo.active || !event.calendar.allowsContentModifications ? nil : store
-    }
-
-    var momentCalendar: EKCalendar? {
-        Demo.active ? nil : store.defaultCalendarForNewEvents
-    }
-
-    func addMoment(at instant: Date, title: String) throws {
-        guard let calendar = momentCalendar else { throw MomentError.noCalendar }
-        let event = EKEvent(eventStore: store)
-        event.title = title
-        event.startDate = instant
-        event.endDate = instant
-        event.calendar = calendar
-        event.addAlarm(EKAlarm(relativeOffset: 0))
-        try store.save(event, span: .thisEvent, commit: true)
     }
 
     func events(from start: Date, to end: Date) -> [EKEvent] {

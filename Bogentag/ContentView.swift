@@ -7,6 +7,7 @@ import UIKit
 
 struct ContentView: View {
     @Environment(SunLocation.self) private var location
+    @Environment(CalendarSelection.self) private var calendarSelection
     @State private var calendars = CalendarStore()
     @AppStorage("tourSeen") private var tourSeen = false
     @State private var showsTour = false
@@ -41,6 +42,13 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged).receive(on: RunLoop.main)) { _ in
             calendars.reload()
         }
+        .onChange(of: hiddenCalendars, initial: true) {
+            calendarSelection.send(hidden: hiddenCalendars)
+        }
+    }
+
+    private var hiddenCalendars: [EKCalendar] {
+        calendars.calendars.filter { !calendars.isVisible($0) }
     }
 
     @ViewBuilder private var calendarGate: some View {

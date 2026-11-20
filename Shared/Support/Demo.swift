@@ -11,7 +11,7 @@ import Foundation
 ///     --demo          Houston on 1 November 2026 at 17:08 UTC, the worked
 ///                     example of the Bogenzeit spec
 ///     --page spans    open on that dial (kiloseconds, spans), or on the watch's
-///                     day or settings page
+///                     agenda, day or settings page
 ///     --civil         open with the civil view over the dial
 ///     --precision high  show the readout at that precision (low, medium, high)
 ///     --page tour --tour-page 5

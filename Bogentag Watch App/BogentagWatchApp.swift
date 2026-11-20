@@ -9,6 +9,7 @@ import UserNotifications
 struct BogentagWatchApp: App {
     @State private var location = SunLocation()
     @State private var timing = Timing()
+    @State private var calendarSelection = CalendarSelection()
 
     init() {
         UNUserNotificationCenter.current().delegate = TimerAlert.shared
@@ -19,6 +20,7 @@ struct BogentagWatchApp: App {
             RootView()
                 .environment(location)
                 .environment(timing)
+                .environment(calendarSelection)
                 .preferredColorScheme(.dark)
         }
     }
