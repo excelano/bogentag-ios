@@ -13,6 +13,7 @@ struct DialScreen: View {
     @Environment(Timing.self) private var timing
     @AppStorage(Settings.dialVariantKey, store: AppGroup.defaults) private var storedVariant = Scale.spans.rawValue
     @State private var showsCivil = Demo.civil
+    @Environment(\.isLuminanceReduced) private var isLuminanceReduced
 
     /// The chosen dial, or the one a `--page` launch argument names.
     private var variant: Scale {
@@ -33,7 +34,7 @@ struct DialScreen: View {
                 let model = DialModel(reading: reading, variant: variant)
                 ZStack {
                     DialView(model: model, showsReadout: !showsCivil, showsArcLengths: !isWatch,
-                             arcs: timing.arcs(on: model, at: now))
+                             showsShadow: !isLuminanceReduced, arcs: timing.arcs(on: model, at: now))
                         .opacity(showsCivil ? 0.35 : 1)
                     if showsCivil {
                         CivilView(reading: reading, now: now)

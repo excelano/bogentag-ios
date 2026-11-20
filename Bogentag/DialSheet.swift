@@ -64,11 +64,14 @@ struct DialSheet: View {
             layout {
                 DialScreen()
                     .padding()
-                HStack(spacing: 6) {
-                    Button("Timer") { panel = .timer }
-                        .buttonStyle(ChoiceButtonStyle(selected: timing.timer != nil))
-                    Button("Stopwatch") { panel = .stopwatch }
-                        .buttonStyle(ChoiceButtonStyle(selected: timing.stopwatch != nil))
+                VStack(spacing: 12) {
+                    ShadowBearing()
+                    HStack(spacing: 6) {
+                        Button("Timer") { panel = .timer }
+                            .buttonStyle(ChoiceButtonStyle(selected: timing.timer != nil))
+                        Button("Stopwatch") { panel = .stopwatch }
+                            .buttonStyle(ChoiceButtonStyle(selected: timing.stopwatch != nil))
+                    }
                 }
                 .padding(.bottom)
                 .frame(maxWidth: 480)
@@ -107,6 +110,26 @@ struct DialSheet: View {
             .presentationBackgroundInteraction(.enabled(upThrough: .medium))
             .presentationBackground(Palette.bezel)
             .presentationDragIndicator(.visible)
+        }
+    }
+}
+
+struct ShadowBearing: View {
+    @Environment(SunLocation.self) private var location
+
+    var body: some View {
+        TimelineView(.everyMinute) { context in
+            let shadow = location.place.flatMap { place in
+                Shadow(of: Reading(at: Demo.now(context.date), latitude: place.latitude, longitude: place.longitude))
+            }
+            let degrees = shadow.map { (Int($0.bearing.rounded()) + 360) % 360 } ?? 0
+            Text("SHADOW \(String(format: "%03d", degrees))° TRUE")
+                .font(.footnote.weight(.medium).monospacedDigit())
+                .tracking(1)
+                .foregroundStyle(Palette.label)
+                .opacity(shadow == nil ? 0 : 1)
+                .accessibilityLabel("Shadow points \(degrees) degrees from true north")
+                .accessibilityHidden(shadow == nil)
         }
     }
 }

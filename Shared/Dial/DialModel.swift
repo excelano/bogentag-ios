@@ -29,6 +29,7 @@ struct DialModel {
     let ringTicks: [Tick]
     /// The current eighth's start and end angles, clockwise, for lighting its arc.
     let eighthArc: (start: Double, end: Double)?
+    let shadow: Shadow?
 
     /// The span dial has no span geometry on a polar day and draws kiloseconds instead.
     var usesSpanGeometry: Bool { variant == .spans && reading.polar == nil }
@@ -96,5 +97,24 @@ struct DialModel {
         } else {
             eighthArc = nil
         }
+        shadow = Shadow(of: reading)
+    }
+}
+
+struct Shadow: Equatable {
+    let bearing: Double
+    let length: Double
+
+    init?(of reading: Reading) {
+        let day = reading.day
+        let utcHour = reading.instant.timeIntervalSince(day.day.midnightUTC) / 3600
+        let declination = Solar.terms(on: day.day, utcHour: utcHour).declination
+        let hourAngle = reading.instant.timeIntervalSince(day.noon) / 86_400 * 2 * .pi
+        let latitude = reading.latitude * .pi / 180
+        let altitude = asin(sin(latitude) * sin(declination) + cos(latitude) * cos(declination) * cos(hourAngle))
+        guard altitude > 0 else { return nil }
+        let bearing = atan2(sin(hourAngle), cos(hourAngle) * sin(latitude) - tan(declination) * cos(latitude))
+        self.bearing = bearing * 180 / .pi
+        length = 1 / tan(altitude)
     }
 }

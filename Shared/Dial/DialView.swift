@@ -15,6 +15,7 @@ struct DialView: View {
     var showsReadout = true
     var showsDate = true
     var showsArcLengths = true
+    var showsShadow = false
     var precision: Precision?
     var arcs: [TimingArc] = []
 
@@ -146,6 +147,13 @@ struct DialView: View {
         }
 
         let sun = point(model.sunAngle, 160)
+        if showsShadow, let shadow = model.shadow {
+            let a = shadow.bearing * .pi / 180
+            let reach = min(11 + 14 * shadow.length, 60) * s
+            let tip = CGPoint(x: sun.x + reach * CGFloat(sin(a)), y: sun.y - reach * CGFloat(cos(a)))
+            sky.stroke(line(sun, tip), with: .color(Palette.night.opacity(0.55)),
+                       style: StrokeStyle(lineWidth: 4 * s, lineCap: .round))
+        }
         context.fill(circle(sun, 20), with: .color(Palette.sun.opacity(0.25)))
         context.fill(circle(sun, 11), with: .color(Palette.sun))
 
