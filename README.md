@@ -44,7 +44,7 @@ location; `Bogentag/CalendarDemo.swift` and `Shared/Support/Demo.swift` read the
 launch arguments.
 
 > [!WARNING]
-> Don't submit Bogentag, or a copy of it under another name, to the App Store. Apple's
+> Do NOT submit Bogentag, or a copy of it under another name, to the App Store. Apple's
 > App Review Guideline 4.3 treats copies of other apps as spam, and a 4.3
 > finding can flag the developer account that submitted it, so that every app
 > the account sends afterwards is flagged too. Build it for your own devices and keep
