@@ -17,7 +17,7 @@
       <stop offset="1" stop-color="#F0A81C"/>
     </radialGradient>
     <path id="long" d="M478.4 214 L512 -40.8 L545.6 214 Z"/>
-    <path id="short" d="M484 226 L512 105.6 L540 226 Z"/>
+    <path id="short" d="M480.5 226 L512 70 L543.5 226 Z"/>
   </defs>
   <rect width="1024" height="1024" fill="url(#ground)"/>
   <circle cx="512" cy="512" r="277" fill="url(#halo)"/>
